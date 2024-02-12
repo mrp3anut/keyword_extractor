@@ -2,6 +2,8 @@
 A python package to extract keywords
 
 # Installation
+Clone/download the package files and
+
 ```
 python setup.py install
 ```
