@@ -8,7 +8,7 @@ Clone/download the package files and
 python setup.py install
 ```
 
-You will also need to install a SpaCy model
+You will also need to install a SpaCy model with
 
 ```
 python -m spacy download en_core_web_sm
