@@ -1,5 +1,5 @@
 # keyword_extractor
-A python package to extract keywords
+A python package to extract keywords using SpaCy and Sentence-Transformers.
 
 # Installation
 Clone/download the package files and
