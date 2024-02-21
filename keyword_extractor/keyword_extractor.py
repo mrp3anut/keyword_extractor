@@ -22,8 +22,22 @@ def extract_keyword(texts, pos_model_name='en_core_web_sm',embedding_model_name=
 
     dotp = np.dot(word_vectors_norm, text_vectors_norm.T)
     dotp_mean = np.mean(dotp, axis=1)
-    top_5_indices = np.argpartition(dotp_mean, -5)[-5:]
-    top_5_keywords = {nostop_noun_chunks[i]: dotp_mean[i] for i in top_5_indices}
+
+    # Sort dotp_mean in descending order and get the indices
+    sorted_indices = np.argsort(dotp_mean)[::-1]
+
+    # Initialize an empty dictionary to store the top 5 unique keywords
+    top_5_keywords = {}
+
+    # Iterate over the sorted indices
+    for i in sorted_indices:
+        # If the keyword is not already in the dictionary, add it
+        if nostop_noun_chunks[i] not in top_5_keywords:
+            top_5_keywords[nostop_noun_chunks[i]] = dotp_mean[i]
+        # If we have already found 5 unique keywords, break the loop
+        if len(top_5_keywords) == 5:
+            break
+
     return top_5_keywords
 
 
