@@ -44,7 +44,7 @@ Output:
 ```
 ## Multiple Topics
 
-When you use multiple topics, the keywords are weighted by their across cluster term frequency.
+When you use multiple topics, the keywords are weighted by their cross-cluster term frequency.
 
 ```
 texts_dict = {'photolithography': ["Photolithography is a process used in microfabrication to pattern parts of a thin film or the bulk of a substrate.",
