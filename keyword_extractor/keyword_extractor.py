@@ -8,7 +8,7 @@ import numpy as np
 from sklearn.preprocessing import normalize
 
 
-def extract_keyword(texts, pos_model_name='en_core_web_sm',embedding_model_name='sentence-transformers/allenai-specter', device='cpu', batch_size=128):
+def extract_keyword(texts, pos_model_name='en_core_web_sm',embedding_model_name='sentence-transformers/allenai-specter', device='cpu', batch_size=128, n_process=1):
 
     if device != 'cpu':
         gpu = True
@@ -51,7 +51,7 @@ def extract_keyword(texts, pos_model_name='en_core_web_sm',embedding_model_name=
         topic_nouns = {}
         for topic in texts.keys():
             topic_texts = texts[topic]
-            nostop_noun_chunks = extract_noun_chunks(topic_texts, nlp, batch_size)
+            nostop_noun_chunks = extract_noun_chunks(topic_texts, nlp, batch_size, n_process)
             topic_nouns[topic] = nostop_noun_chunks
 
         topic_nouns = tfidf_weight(topic_nouns)
@@ -95,9 +95,9 @@ def get_noun_vecs(noun_chunks, model_name, device='cpu', batch_size=128):
     return noun_vecs
 
 
-def extract_noun_chunks(texts, nlp, batch_size=128):
+def extract_noun_chunks(texts, nlp, batch_size=128, n_process=1):
     nostop_noun_chunks = []
-    for doc in nlp.pipe(texts, batch_size=batch_size):
+    for doc in nlp.pipe(texts, batch_size=batch_size, n_process=n_process):
         for noun_chunk in doc.noun_chunks:
             text_list = [chunk.text for chunk in noun_chunk if not chunk.is_stop]
             text = " ".join(text_list).lower().strip()
